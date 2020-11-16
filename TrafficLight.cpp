@@ -9,14 +9,14 @@ TrafficLight::TrafficLight() {
     this->direction = "";
 }
 
-TrafficLight::TrafficLight(string directionBound){
+TrafficLight::TrafficLight(std::string directionBound){
     this->direction = directionBound;
     this->color = "red"
 }
 
 TrafficLight::~TrafficLight() {}
 
-TrafficLight::changeColor(string lightColor) {
+TrafficLight::changeColor(std::string lightColor) {
     this->color = lightColor
 }
 

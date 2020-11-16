@@ -12,9 +12,9 @@ private:
 
 public:
     TrafficLight::TrafficLight();
-    TrafficLight::TrafficLight(string directionBound);
+    TrafficLight::TrafficLight(std::string directionBound);
     TrafficLight::~TrafficLight();
-    TrafficLight::changeColor(string lightColor);
+    TrafficLight::changeColor(std::string lightColor);
     bool TrafficLight::isColorRed();
     bool TrafficLight::isColorYellow();
     bool TrafficLight::isColorGreen();
