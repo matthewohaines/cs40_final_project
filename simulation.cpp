@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
-//#include "TrafflicLane.h"
-//#include "Lane.h"
-//#include "Section.h"
-//#include "Intersection.h"
+#include "TrafflicLane.h"
+#include "Lane.h"
+#include "Section.h"
+#include "Intersection.h"
 #include <string>
 #include <vector>
 
