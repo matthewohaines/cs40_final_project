@@ -11,6 +11,7 @@ class Cars {
     private:
         int idNumber;
         int length;
+        static int numCars;
 
     public:
         Cars(int idNum, int len);
@@ -21,6 +22,7 @@ class Cars {
         void setIDNumber();
         int getLength();
         void setLength();
+        void increaseNumberCars();
 
 };
 

@@ -5,15 +5,32 @@
 #include "Section.h"
 #include "Intersection.h"
 #include "Cars.h"
+#include <stdlib.h>
 
 
 Cars::Cars(int idNum, int len)
 {
-	this->idNumber = idNum;
+	this->idNumber = numCars;
+	increaseNumberCars();
 	this->length = len;
 }
 
+Cars::Cars()
+{
+	rseed = rand() % 4 + 2;
+	this->length = rseed;
+	rseed = rand() % 1000 + 1;
+	this->idNumber = rseed;
+	increaseNumberCars();
+}
+
 Cars::~Cars(){}
+
+void Cars::increaseNumberCars()
+{
+	numCars++;
+	return;
+}
 
 void Cars::moveOne()
 {
