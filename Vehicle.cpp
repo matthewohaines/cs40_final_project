@@ -2,19 +2,20 @@
 #define __VEHICLE_CPP__
 
 #include "Vehicle.h"
+#include "Lane.h"
 
 int Vehicle::vehicleCount = 0;
 
-Vehicle::Vehicle(VehicleType type, Direction direction)
+Vehicle::Vehicle(VehicleType type, Lane theVehicleLane)
     : vehicleID(Vehicle::vehicleCount++), 
       vehicleType(type),
-      vehicleDirection(direction)
+      vehicleLane(theVehicleLane)
 {}
 
 Vehicle::Vehicle(const Vehicle& other)
     : vehicleID(other.vehicleID),
       vehicleType(other.vehicleType),
-      vehicleDirection(other.vehicleDirection)
+      vehicleLane(other.theVehicleLane)
 {}
 
 Vehicle::~Vehicle() {}

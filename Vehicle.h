@@ -1,10 +1,9 @@
 #ifndef __VEHICLE_H__
 #define __VEHICLE_H__
 
-// enum: see http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-enum
-enum class Direction   {north, south, east, west};
+#include "Lane.h"
+
 enum class VehicleType {car, suv, truck};
-enum class LightColor  {green, yellow, red};
 
 class VehicleBase
 {
@@ -14,17 +13,17 @@ class VehicleBase
    private:
       int         vehicleID;
       VehicleType vehicleType;
-      Direction   vehicleDirection;
+      Lane   vehicleLane;
 
    public:
-      VehicleBase(VehicleType type, Direction originalDirection);
+      VehicleBase(VehicleType type, Lane theVehicleLane);
       VehicleBase(const VehicleBase& other);
       ~VehicleBase();
 
       inline int getVehicleID() const { return this->vehicleID; }
 
       inline VehicleType getVehicleType() const { return this->vehicleType; }
-      inline Direction   getVehicleOriginalDirection() const { return this->vehicleDirection; }
+
 };
 
 #endif
