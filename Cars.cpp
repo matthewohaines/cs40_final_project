@@ -8,11 +8,13 @@
 #include <stdlib.h>
 
 
-Cars::Cars(int idNum, int len)
+Cars::Cars(int idNum, int len, Lane *theLane)
 {
 	this->idNumber = numCars;
 	increaseNumberCars();
 	this->length = len;
+	this->sectionOne = theLane.firstSection;
+
 }
 
 Cars::Cars()

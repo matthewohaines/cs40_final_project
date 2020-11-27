@@ -1,12 +1,11 @@
 # cs40_final_project
 
-connect cars to sections
-setting up so its a queue
-look at animator
-	see how we can graphically display
-	every car needs ID number
-Car Class
-	instance variables
-		lengths
-	how to connect to lanes/how to move
-		how it moves
+create vehicle class 
+	one randomly generated 
+		include generator inside class t determine which type of vehicle is made
+	one having inputs
+	sub class cars, SUVs, trucks
+	implement pointing
+		points to the section
+		
+Work on simulator
