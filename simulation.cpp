@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "TrafflicLane.h"
+#include "TrafficLight.h"
 #include "Lane.h"
 #include "Section.h"
 #include "Intersection.h"
@@ -89,6 +89,67 @@ int main(int argc, char* argv[])
     proportion_left_turn_SUVs = stod(paramValues[15]);
     proportion_right_turn_trucks = stod(paramValues[16]);
     proportion_left_turn_trucks = stod(paramValues[17]);
+
+    //Sets traffic lights to their starting color
+    TrafficLight northbound("northbound", "green");
+    TrafficLight southbound("southbound", "green");
+    TrafficLight eastbound("eastbound", "red");
+    TrafficLight westbound("westbound", "red");
+
+    int northAndSouthGreen = green_north_south;
+    int northAndSouthYellow = yellow_north_south;
+    int eastAndWestGreen = green_east_west;
+    int eastAndWestYellow = yellow_east_west; 
+
+    //Starts the simulation clock
+    int time = 0;
+    while (time < maximum_simulated_time){
+    time++;
+    if (northbound.isGreen() && southbound.isGreen()){
+       northAndSouthGreen--;
+    }
+    
+    if (northAndSouthGreen == 0){
+       northAndSouthGreen = green_north_south;
+       northbound.changeColor("yellow");
+       southbound.changeColor("yellow");
+    }
+    
+    if (northbound.isYellow() && southbound.isYellow()){
+       northAndSouthYellow--;
+    }
+   
+    if (northAndSouthYellow == 0){
+       northAndSouthYellow = yellow_north_south;
+       northbound.changeColor("red");
+       southbound.changeColor("red"); 
+       westbound.changeColor("green");
+       eastbound.changeColor("green");
+    }
+
+    if (westbound.isGreen() && eastbound.isGreen()){
+       eastAndWestGreen--;
+    }
+    
+    if (eastAndWestGreen == 0){
+       eastAndWestGreen = green_east_west;
+       eastbound.changeColor("yellow");
+       westbound.changeColor("yellow");
+    }
+    
+    if (eastbound.isYellow() && westbound.isYellow()){
+       eastAndWestYellow--;
+    }
+
+    if (eastAndWestYellow == 0){
+       eastAndWestYellow = yellow_east_west;
+       eastbound.changeColor("red");
+       westbound.changeColor("red");
+       northbound.changeColor("green");
+       southbound.changeColor("green");
+    }
+
+    }
        
     return 0;
     

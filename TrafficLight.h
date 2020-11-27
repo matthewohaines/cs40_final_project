@@ -11,13 +11,14 @@ private:
     std::string direction;
 
 public:
-    TrafficLight::TrafficLight();
-    TrafficLight::TrafficLight(std::string directionBound);
-    TrafficLight::~TrafficLight();
-    TrafficLight::changeColor(std::string lightColor);
-    bool TrafficLight::isColorRed();
-    bool TrafficLight::isColorYellow();
-    bool TrafficLight::isColorGreen();
+    TrafficLight();
+    TrafficLight(std::string directionBound, std::string lightColor);
+    ~TrafficLight();
+    void changeColor(std::string lightColor);
+    bool isRed();
+    bool isYellow();
+    bool isGreen();
+    std::string getColor();
 };
 
 #endif

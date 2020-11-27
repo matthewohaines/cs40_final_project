@@ -9,36 +9,40 @@ TrafficLight::TrafficLight() {
     this->direction = "";
 }
 
-TrafficLight::TrafficLight(std::string directionBound){
+TrafficLight::TrafficLight(std::string directionBound, std::string lightColor){
     this->direction = directionBound;
-    this->color = "red"
+    this->color = lightColor;
 }
 
 TrafficLight::~TrafficLight() {}
 
-TrafficLight::changeColor(std::string lightColor) {
-    this->color = lightColor
+void TrafficLight::changeColor(std::string lightColor) {
+    this->color = lightColor;
 }
 
-bool TrafficLight::isColorRed(){
+bool TrafficLight::isRed(){
     if (this->color == "red"){
         return true;
     }
-    returnn false;
+    return false;
 }
 
-bool TrafficLight::isColorYellow(){
+bool TrafficLight::isYellow(){
     if (this->color == "yellow"){
         return true;
     }
-    returnn false;
+    return false;
 }
 
-bool TrafficLight::isColorGreen(){
+bool TrafficLight::isGreen(){
     if (this->color == "green"){
         return true;
     }
     return false;
+}
+
+std::string TrafficLight::getColor(){
+    return this->color;
 }
 #endif
 
