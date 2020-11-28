@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <random>
 #include "TrafficLight.h"
 #include "Lane.h"
 #include "Section.h"
@@ -101,54 +102,62 @@ int main(int argc, char* argv[])
     int eastAndWestGreen = green_east_west;
     int eastAndWestYellow = yellow_east_west; 
 
+    //Sets the initial seed for random number generator
+    std::mt19937 rng;
+    std::uniform_real_distribution<double> rand_double(0.0, 1.0);
+    rng.seed(initialSeed);
+    
+    for (int i = 0; i < 10; i++){  
+       std::cout << rand_double(rng) << std::endl;
+    }
     //Starts the simulation clock
     int time = 0;
     while (time < maximum_simulated_time){
-    time++;
-    if (northbound.isGreen() && southbound.isGreen()){
-       northAndSouthGreen--;
-    }
+
+       if (northbound.isGreen() && southbound.isGreen()){
+          northAndSouthGreen--;
+       }
     
-    if (northAndSouthGreen == 0){
-       northAndSouthGreen = green_north_south;
-       northbound.changeColor("yellow");
-       southbound.changeColor("yellow");
-    }
+       if (northAndSouthGreen == 0){
+          northAndSouthGreen = green_north_south;
+          northbound.changeColor("yellow");
+          southbound.changeColor("yellow");
+       }
     
-    if (northbound.isYellow() && southbound.isYellow()){
-       northAndSouthYellow--;
-    }
+       if (northbound.isYellow() && southbound.isYellow()){
+          northAndSouthYellow--;
+       }
    
-    if (northAndSouthYellow == 0){
-       northAndSouthYellow = yellow_north_south;
-       northbound.changeColor("red");
-       southbound.changeColor("red"); 
-       westbound.changeColor("green");
-       eastbound.changeColor("green");
-    }
+       if (northAndSouthYellow == 0){
+          northAndSouthYellow = yellow_north_south;
+          northbound.changeColor("red");
+          southbound.changeColor("red"); 
+          westbound.changeColor("green");
+          eastbound.changeColor("green");
+       }
 
-    if (westbound.isGreen() && eastbound.isGreen()){
-       eastAndWestGreen--;
-    }
+       if (westbound.isGreen() && eastbound.isGreen()){
+          eastAndWestGreen--;
+       }
     
-    if (eastAndWestGreen == 0){
-       eastAndWestGreen = green_east_west;
-       eastbound.changeColor("yellow");
-       westbound.changeColor("yellow");
-    }
+       if (eastAndWestGreen == 0){
+          eastAndWestGreen = green_east_west;
+          eastbound.changeColor("yellow");
+          westbound.changeColor("yellow");
+       }
     
-    if (eastbound.isYellow() && westbound.isYellow()){
-       eastAndWestYellow--;
-    }
+       if (eastbound.isYellow() && westbound.isYellow()){
+          eastAndWestYellow--;
+       }
 
-    if (eastAndWestYellow == 0){
-       eastAndWestYellow = yellow_east_west;
-       eastbound.changeColor("red");
-       westbound.changeColor("red");
-       northbound.changeColor("green");
-       southbound.changeColor("green");
-    }
-
+       if (eastAndWestYellow == 0){
+          eastAndWestYellow = yellow_east_west;
+          eastbound.changeColor("red");
+          westbound.changeColor("red");
+          northbound.changeColor("green");
+          southbound.changeColor("green");
+       }
+       time++;
     }
        
     return 0;
