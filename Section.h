@@ -5,18 +5,23 @@ class Section {
 
     private:
         bool sectionOccupied;
+
         
     public:
+        Section *forward;
+        Section *right;
         Section();
         ~Section();
 
-        Section *forward;
-        Section *right;
+        bool getSectionOccupied();
+        void setSectionOccupied(bool value);
+        bool getForwardSectionOccupied();
+        void setForward(Section &next);
+        void setRight(Section &next);
 
-        bool isSectionOccupied();
-        void changeSectionOccupied(bool value);  
-        bool freeToMoveForward();
-        bool freeToMoveRight();
+        friend class Lane;
+
+
 };
 
 #endif

@@ -12,35 +12,29 @@ Section::Section() {
 
 Section::~Section() {}
 
-bool Section::isSectionOccupied() {
+bool Section::getSectionOccupied() {
 
     return this->sectionOccupied;
 }
 
-void Section::changeSectionOccupied(bool value) {
+void Section::setSectionOccupied(bool value) {
 
     this->sectionOccupied = value;
 }
 
-bool Section::freeToMoveForward() {
+bool Section::getForwardSectionOccupied() {
 
-    if(this->forward == nullptr) {
-        return false;
-    }
-    if(forward->isSectionOccupied() == true) {
-        return false;
-    }
-    return true;
+    return this->forward->getSectionOccupied();
 }
-bool Section::freeToMoveRight() {
-    
-    if(this->right == nullptr) {
-        return false;
-    }
-    if(right->isSectionOccupied() == true) {
-        return false;
-    }
-    return true;
+
+void Section::setForward(Section &next) {
+
+    this->forward = &next;
+}
+
+void Section::setRight(Section &next) {
+
+    this->right  = &next;
 }
 
 #endif

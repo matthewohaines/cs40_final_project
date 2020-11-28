@@ -35,9 +35,18 @@ void Lane::add() {
     currentPosition++;
 }
 
-void Lane::createLane(int number_of_sections_before_intersection) {
+int Lane::getCurrentPosition() {
 
-    for(int i=0; i<number_of_sections_before_intersection*2; i++) {
+    return this->currentPosition;
+}
+
+int Lane::getNumberOfSections() {
+
+    return this->numberOfSections;
+}
+
+void Lane::createLane(int number_of_sections_before_intersection) {
+    for(int i{}; i<number_of_sections_before_intersection*2; i++) {
 
         add();
     }
@@ -61,8 +70,9 @@ void Lane::reset() {
     this->currentPosition = 1;
 }
 void Lane::linkFromIntersection(Intersection &inter, int number_of_sections_before_intersection) {
+
     reset();
-    for(int i=0; i<number_of_sections_before_intersection; i++) {
+    for(int i{}; i<number_of_sections_before_intersection; i++) {
         moveCurrent(inter, number_of_sections_before_intersection);
     }
     switch(this->direction[0]) {
@@ -87,7 +97,7 @@ void Lane::linkFromIntersection(Intersection &inter, int number_of_sections_befo
 void Lane::linkToIntersection(Intersection &inter, int number_of_sections_before_intersection) {
 
     reset();
-    for(int i=0; i<number_of_sections_before_intersection-1; i++) {
+    for(int i{}; i<number_of_sections_before_intersection-1; i++) {
         moveCurrent(inter, number_of_sections_before_intersection);
     }
     switch(this->direction[0]) {
