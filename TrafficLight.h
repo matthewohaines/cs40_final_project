@@ -19,6 +19,7 @@ public:
     bool isYellow();
     bool isGreen();
     std::string getColor();
+    std::string getDirection();
 };
 
 #endif

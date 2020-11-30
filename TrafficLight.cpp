@@ -44,5 +44,9 @@ bool TrafficLight::isGreen(){
 std::string TrafficLight::getColor(){
     return this->color;
 }
+
+std::string TrafficLight::getDirection(){
+    return this->direction;
+}
 #endif
 

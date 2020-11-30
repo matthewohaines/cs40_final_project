@@ -6,6 +6,7 @@
 #include "Section.h"
 #include "Intersection.h"
 #include "Vehicle.h"
+#include "Animator.h"
 #include <string>
 #include <vector>
 
@@ -100,10 +101,11 @@ int main(int argc, char* argv[])
 
     //Sets traffic lights to their starting color
     TrafficLight northbound("northbound", "green");
-    TrafficLight southbound("southbound", "green");
+    TrafficLight southbound("southnound", "green");
     TrafficLight eastbound("eastbound", "red");
     TrafficLight westbound("westbound", "red");
-
+    Animator::MAX_VEHICLE_COUNT = 999;
+    Animator anim(number_of_sections_before_intersection);    
     int northAndSouthGreen = green_north_south;
     int northAndSouthYellow = yellow_north_south;
     int eastAndWestGreen = green_east_west;
@@ -114,11 +116,11 @@ int main(int argc, char* argv[])
     std::uniform_real_distribution<double> rand_double(0.0, 1.0);
     rng.seed(initialSeed);
     
- 
+   
     //Starts the simulation clock
     int time = 0;
     while (time < maximum_simulated_time){
-       
+        
        //Sets the random number for each tick of the simulation
        double random = rand_double(rng);
        
