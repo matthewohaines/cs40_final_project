@@ -116,10 +116,10 @@ int main(int argc, char* argv[])
     std::uniform_real_distribution<double> rand_double(0.0, 1.0);
     rng.seed(initialSeed);
     
-   
+   char dummy;
     //Starts the simulation clock
     int time = 0;
-    while (time < maximum_simulated_time){
+    while (time < 20){
         
        //Sets the random number for each tick of the simulation
        double random = rand_double(rng);
@@ -292,6 +292,8 @@ int main(int argc, char* argv[])
              }
           }
        }
+       anim.draw(time, northbound, southbound, eastbound, westbound);
+       std::cin.get(dummy);
        //Increases time
        time++;
     }

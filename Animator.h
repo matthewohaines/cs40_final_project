@@ -82,8 +82,12 @@ class Animator
     
       std::string createLight(std::string color);
      
-
-
+      void drawNorthPortion(int time, TrafficLight north, TrafficLight west);
+      void drawEastbound();
+      void drawEastWestBoundary();
+      void drawWestbound();
+      void drawSouthPortion(TrafficLight east, TrafficLight north);
+      
 
    public:
       static int MAX_VEHICLE_COUNT;
@@ -91,7 +95,7 @@ class Animator
 
       Animator(int numSectionsBeforeIntersection);
       ~Animator();
-
+      void draw(int time, TrafficLight north, TrafficLight south, TrafficLight east, TrafficLight west);
 };
 
 #endif
