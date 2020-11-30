@@ -4,20 +4,20 @@
 #include "Vehicle.h"
 #include "Lane.h"
 
-int Vehicle::vehicleCount = 0;
+int VehicleBase::vehicleCount = 0;
 
-Vehicle::Vehicle(VehicleType type, Lane theVehicleLane)
-    : vehicleID(Vehicle::vehicleCount++), 
+VehicleBase::VehicleBase(VehicleType type, Lane theVehicleLane)
+    : vehicleID(VehicleBase::vehicleCount++), 
       vehicleType(type),
       vehicleLane(theVehicleLane)
 {}
 
-Vehicle::Vehicle(const Vehicle& other)
+VehicleBase::VehicleBase(const VehicleBase& other)
     : vehicleID(other.vehicleID),
       vehicleType(other.vehicleType),
-      vehicleLane(other.theVehicleLane)
+      vehicleLane(other.vehicleLane)
 {}
 
-Vehicle::~Vehicle() {}
+VehicleBase::~VehicleBase() {}
 
 #endif
