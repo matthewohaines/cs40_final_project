@@ -1,28 +1,22 @@
 #ifndef __VEHICLE_H__
 #define __VEHICLE_H__
 
-#include "Lane.h"
+#include "Section.h"
+using namespace std;
 
-enum class VehicleType {car, suv, truck};
-
-class VehicleBase
+class Vehicle
 {
+   private:
+
+      int vehicleID;
+
    public:
       static int vehicleCount;
+      Vehicle(int theVehicleID);
+      Vehicle(const Vehicle& other);
+      ~Vehicle();
+      int getVehicleID();
 
-   private:
-      int         vehicleID;
-      VehicleType vehicleType;
-      Lane   vehicleLane;
-
-   public:
-      VehicleBase(VehicleType type, Lane theVehicleLane);
-      VehicleBase(const VehicleBase& other);
-      ~VehicleBase();
-
-      inline int getVehicleID() const { return this->vehicleID; }
-
-      inline VehicleType getVehicleType() const { return this->vehicleType; }
 
 };
 

@@ -2,22 +2,32 @@
 #define __VEHICLE_CPP__
 
 #include "Vehicle.h"
-#include "Lane.h"
+#include "Section.h"
+using namespace std;
 
-int VehicleBase::vehicleCount = 0;
 
-VehicleBase::VehicleBase(VehicleType type, Lane theVehicleLane)
-    : vehicleID(VehicleBase::vehicleCount++), 
-      vehicleType(type),
-      vehicleLane(theVehicleLane)
-{}
+Vehicle::Vehicle(int theVehicleID)
+{
+	vehicleID = theVehicleID;
+	vehicleCount++;
+}
 
-VehicleBase::VehicleBase(const VehicleBase& other)
-    : vehicleID(other.vehicleID),
-      vehicleType(other.vehicleType),
-      vehicleLane(other.vehicleLane)
-{}
+Vehicle::Vehicle(const Vehicle& other)
+    : vehicleID(other.vehicleID)
+    {
+    	vehicleCount++;
+    }
 
-VehicleBase::~VehicleBase() {}
+Vehicle::~Vehicle(){}
+
+int Vehicle::getVehicleID()
+{
+	return this->vehicleID;
+}
+
+int Vehicle::getVehicleCount()
+{
+	return vehicleCount;
+}
 
 #endif
