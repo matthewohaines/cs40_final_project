@@ -1,15 +1,17 @@
+#ifndef __CAR_CPP__
+#define __CAR_CPP__
+
+
 #include "Vehicle.h"
 #include "Section.h"
+#include "Car.h"
 
-using namespace std;
-
-
-Car::Car(int theVehID, Section *first, Section *second)
-        : Vehicle(theVehID)
+Car::Car(std::string theVehTurn)
+        : Vehicle(theVehTurn)
         {
-            one = *first;
-            two = *second;
+            one = nullptr;
+            two = nullptr;
         }
     
 Car::~Car(){}
-
+#endif

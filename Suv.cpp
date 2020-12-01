@@ -1,17 +1,18 @@
+#ifndef __SUV_CPP__
+#define __SUV_CPP__
+
 #include "Vehicle.h"
 #include "Section.h"
+#include "Suv.h"
 
 
-using namespace std;
-
-
-Suv::Suv(int theVehID, Section *first, Section *second, Section *third)
-        : Vehicle(theVehID)
+Suv::Suv(std::string theVehTurn)
+        : Vehicle(theVehTurn)
         {
-            one = *first;
-            two = *second;
-            third = *third;
+            one = nullptr;
+            two = nullptr;
+            three = nullptr;
         }
     
 Suv::~Suv(){}
-
+#endif

@@ -3,8 +3,7 @@
 
 #include "Section.h"
 #include "Vehicle.h"
-
-using namespace std;
+#include <string>
 
 class Car : public Vehicle
 {
@@ -13,7 +12,7 @@ class Car : public Vehicle
         Section *one;
         Section *two;
 
-        Car(int theVehID, Section *first, Section *second);
+        Car(std::string theVehTurn);
         ~Car();
 };
 

@@ -2,20 +2,23 @@
 #define __VEHICLE_H__
 
 #include "Section.h"
-using namespace std;
+#include <string>
 
 class Vehicle
 {
    private:
 
       int vehicleID;
+      std::string intendedTurn;
 
    public:
       static int vehicleCount;
-      Vehicle(int theVehicleID);
+      Vehicle(std::string turn);
       Vehicle(const Vehicle& other);
       ~Vehicle();
       int getVehicleID();
+      int getVehicleCount();
+      std::string getTurn();
 
 
 };

@@ -3,8 +3,7 @@
 
 #include "Section.h"
 #include "Vehicle.h"
-
-using namespace std;
+#include <string>
 
 class Truck : public Vehicle
 {
@@ -15,7 +14,7 @@ class Truck : public Vehicle
         Section *three;
         Section *four;
 
-        Truck(int theVehID, Section *first, Section *second, Section *third, Section *fourth);
+        Truck(std::string theVehTurn);
         ~Truck();
 };
 

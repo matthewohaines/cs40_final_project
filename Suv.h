@@ -3,8 +3,7 @@
 
 #include "Section.h"
 #include "Vehicle.h"
-
-using namespace std;
+#include <string>
 
 class Suv : public Vehicle
 {
@@ -14,7 +13,7 @@ class Suv : public Vehicle
         Section *two;
         Section *three;
 
-        Suv(int theVehID, Section *first, Section *second, Section *third);
+        Suv(std::string theVehTurn);
         ~Suv();
 };
 

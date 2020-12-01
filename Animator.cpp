@@ -262,13 +262,13 @@ void Animator::drawEastbound()
   //  {
     //    int section = s;
       //  if (westToEast[section] == nullptr)
-        //    std::cout << Animator::EMPTY_SECTION;
+            std::cout << Animator::EMPTY_SECTION;
        // else
          //   std::cout << getVehicleColor(westToEast[section])
            //           << std::setfill('0') << std::setw(Animator::DIGITS_TO_DRAW)
              //         << westToEast[section]->getVehicleID()
                //       << Animator::COLOR_RESET;
-      //  std::cout << (s < static_cast<int>(westToEast.size()) - 1 ? "|" :  "");
+    //    std::cout << (s < static_cast<int>(westToEast.size()) - 1 ? "|" :  "");
   //  }
     std::cout << std::endl;
 
@@ -323,9 +323,9 @@ void Animator::drawWestbound()
 
     // and now handle all the east-to-west sections after the intersection
     // (drawing in reverse order of the vector)
-   // for (int s = numSectionsBefore + 2; s < static_cast<int>(eastToWest.size()); s++)
+// for (int s = numSectionsBefore + 2; s < static_cast<int>(eastToWest.size()); s++)
    // {
-     //   int section = eastToWest.size() - s - 1;
+       // int section = eastToWest.size()- s - 1;
        // if (eastToWest[section] == nullptr)
             std::cout << Animator::EMPTY_SECTION;
        // else
@@ -333,7 +333,7 @@ void Animator::drawWestbound()
            //           << std::setfill('0') << std::setw(Animator::DIGITS_TO_DRAW)
              //         << eastToWest[section]->getVehicleID()
                //       << Animator::COLOR_RESET;
-       // std::cout << (s < static_cast<int>(eastToWest.size()) - 1 ? "|" :  "");
+     //   std::cout << (s < static_cast<int>(eastToWest.size())-1 ? "|" :  "");
  //   }
     std::cout << std::endl;
 

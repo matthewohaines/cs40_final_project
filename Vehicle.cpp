@@ -3,12 +3,13 @@
 
 #include "Vehicle.h"
 #include "Section.h"
-using namespace std;
 
 
-Vehicle::Vehicle(int theVehicleID)
+int Vehicle::vehicleCount = 0;
+Vehicle::Vehicle(std::string turn)
 {
-	vehicleID = theVehicleID;
+	this->vehicleID = vehicleCount;
+        this->intendedTurn = turn;
 	vehicleCount++;
 }
 
@@ -23,6 +24,10 @@ Vehicle::~Vehicle(){}
 int Vehicle::getVehicleID()
 {
 	return this->vehicleID;
+}
+std::string Vehicle::getTurn()
+{
+        return this->intendedTurn;
 }
 
 int Vehicle::getVehicleCount()

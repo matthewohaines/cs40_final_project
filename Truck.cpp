@@ -1,18 +1,20 @@
+#ifndef __TRUCK_CPP__
+#define __TRUCK_CPP__
+
 #include "Vehicle.h"
 #include "Section.h"
+#include "Truck.h"
 
 
-using namespace std;
 
-
-Truck::Truck(int theVehID, Section *first, Section *second, Section *third, Section *fourth)
-        : Vehicle(theVehID)
+Truck::Truck(std::string theVehTurn)
+        : Vehicle(theVehTurn)
         {
-            one = *first;
-            two = *second;
-            third = *third;
-            four = *fourth;
+            one = nullptr;
+            two = nullptr;
+            three = nullptr;
+            four = nullptr;
         }
     
 Truck::~Truck(){}
-
+#endif

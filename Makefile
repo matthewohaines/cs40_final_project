@@ -1,18 +1,20 @@
 EXECS = simulation
-OBJS = Cars.o Intersection.o Lane.o Section.o simulation.o TrafficLight.o 
+OBJS = Section.o Lane.o Intersection.o TrafficLight.o Vehicle.o Truck.o Car.o Suv.o Animator.o simulation.o 
 
+#### use next two lines for Mac
+##CC = clang++
+##CCFLAGS = -std=c++11 -stdlib=libc++
+
+#### use next two lines for mathcs* machines:
 CC = g++
 CCFLAGS = -std=c++17
 
 all: $(EXECS)
 
-Processor: $(OBJS)
+simulation: $(OBJS)
 	$(CC) $(CCFLAGS) $^ -o $@
 
-%.o: %.cpp %.h
-	$(CC) $(CCFLAGS) -c $<
-
-%.o: lab5/%.cpp lab5/%.h
+%.o: %.cpp *.h
 	$(CC) $(CCFLAGS) -c $<
 
 %.o: %.cpp
