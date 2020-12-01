@@ -1,5 +1,5 @@
 #ifndef __TRUCK_H__
-#define __TRUCL_H__
+#define __TRUCK_H__
 
 #include "Section.h"
 #include "Vehicle.h"
