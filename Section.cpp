@@ -2,39 +2,25 @@
 #define __SECTION_CPP__
 
 #include "Section.h"
+#include "Vehicle.h"
 
 Section::Section() {
-
-    this->sectionOccupied = false;
+    
+    this->vehicle = nullptr;
     this->forward = nullptr;
     this->right = nullptr;
+    this->previous = nullptr;
 }
-
 Section::~Section() {}
 
-bool Section::getSectionOccupied() {
+bool Section::isSectionOccupied() {
 
-    return this->sectionOccupied;
+    return vehicle != nullptr;
 }
 
-void Section::setSectionOccupied(bool value) {
+void Section::changeSectionOccupied(Vehicle &vehicle) {
 
-    this->sectionOccupied = value;
-}
-
-bool Section::getForwardSectionOccupied() {
-
-    return this->forward->getSectionOccupied();
-}
-
-void Section::setForward(Section &next) {
-
-    this->forward = &next;
-}
-
-void Section::setRight(Section &next) {
-
-    this->right  = &next;
+    this->vehicle = &vehicle;
 }
 
 #endif

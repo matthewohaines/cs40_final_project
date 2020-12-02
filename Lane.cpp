@@ -13,6 +13,7 @@ Lane::Lane(std::string direction, int number_of_sections_before_intersection) {
     this->direction = direction;
     this->numberOfSections = 0;
     this->currentPosition = 0;
+    this->laneQueue = std::deque<Vehicle>();
     createLane(number_of_sections_before_intersection);
 }
 
@@ -20,29 +21,86 @@ Lane::~Lane() {}
 
 void Lane::add() {
 
-    Section *newSection = new Section;
+    Section newSection;
+    currentSection = &newSection;
     if(firstSection == nullptr) {
-        firstSection = newSection;
-        lastSection = newSection;
-        currentSection = newSection;
+        firstSection = &newSection;
     }
-    else {
-        lastSection->forward = newSection;
-        lastSection = lastSection->forward;
-        currentSection = newSection;
+    newSection.previous = lastSection;
+    lastSection = &newSection;
+
+    if(newSection.previous != nullptr) {
+        lastSection->previous->forward = &newSection;
     }
     numberOfSections++;
     currentPosition++;
 }
 
+void Lane::placeVehicle(Vehicle& vehicle) {
+
+    switch(vehicle.getVehicleType()) {
+
+        case VehicleType::car:
+            firstSection->vehicle = &vehicle;
+            if(!firstSection->forward->isSectionOccupied()) {
+                firstSection->forward->vehicle = &vehicle;
+            }
+            break;
+
+        case VehicleType::suv:
+            break;
+
+        case VehicleType::truck:
+            break;
+
+    }
+}
+
+/*
+bool Lane::getCurrent() {
+
+    return currentSection->getSectionOccupied();
+}
+
+bool Lane::getFirst() {
+
+    return firstSection->getSectionOccupied();
+}
+
+bool Lane::getLast() {
+    
+    return lastSection->getSectionOccupied();
+}
+
+bool Lane::getNext() {
+
+    if(currentSection->forward != nullptr) {
+        currentSection = currentSection->forward;
+        currentPosition++;
+        return currentSection->getSectionOccupied();
+    }
+    return currentSection->getSectionOccupied();
+}
+
+bool Lane::getPrevious() {
+
+    if(currentSection->previous != nullptr) {
+        currentSection = currentSection->previous;
+        currentPosition--;
+        return currentSection->getSectionOccupied();
+    }
+    return currentSection->getSectionOccupied();
+}
+*/
+
 int Lane::getCurrentPosition() {
 
-    return this->currentPosition;
+    return currentPosition;
 }
 
 int Lane::getNumberOfSections() {
 
-    return this->numberOfSections;
+    return numberOfSections;
 }
 
 void Lane::createLane(int number_of_sections_before_intersection) {
@@ -52,44 +110,37 @@ void Lane::createLane(int number_of_sections_before_intersection) {
     }
 }
 
-void Lane::moveCurrent(Intersection &inter, int number) {
-
-    if(currentPosition == number+2) {
-        currentSection = currentSection->right;
-        currentPosition++;
-    }
-    else {
-    currentSection = currentSection->forward;
-    currentPosition++;
-    }
-}
-
 void Lane::reset() {
 
     this->currentSection = firstSection;
     this->currentPosition = 1;
 }
+
 void Lane::linkFromIntersection(Intersection &inter, int number_of_sections_before_intersection) {
 
     reset();
     for(int i{}; i<number_of_sections_before_intersection; i++) {
-        moveCurrent(inter, number_of_sections_before_intersection);
+        currentSection = currentSection->forward;
     }
     switch(this->direction[0]) {
         case 'n' :
-            inter.two.right = currentSection;
+            inter.two.forward = currentSection;
+            currentSection->previous = &inter.two;
             break;
 
         case 's' :
             inter.four.right = currentSection;
+            currentSection->previous = &inter.four;
             break;
 
          case 'e' :
             inter.one.right = currentSection;
+            currentSection->previous = &inter.one;
             break;
 
          case 'w' :
             inter.three.right = currentSection;
+            currentSection->previous = &inter.three;
             break;
     }
 }
@@ -98,23 +149,27 @@ void Lane::linkToIntersection(Intersection &inter, int number_of_sections_before
 
     reset();
     for(int i{}; i<number_of_sections_before_intersection-1; i++) {
-        moveCurrent(inter, number_of_sections_before_intersection);
+        currentSection = currentSection->forward;
     }
     switch(this->direction[0]) {
         case 'n' :
             currentSection->forward = &inter.one;
+            inter.one.previous = currentSection;
             break;
 
         case 's' :
             currentSection->forward = &inter.three;
+            inter.three.previous = currentSection;
             break;
 
          case 'e' :
             currentSection->forward = &inter.four;
+            inter.four.previous = currentSection;
             break;
 
          case 'w' :
             currentSection->forward = &inter.two;
+            inter.two.previous = currentSection;
             break;
     }
 }

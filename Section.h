@@ -1,27 +1,26 @@
 #ifndef __SECTION_H__
 #define __SECTION_H__
 
+#include "Vehicle.h"
+
 class Section {
 
     private:
-        bool sectionOccupied;
+        Vehicle *vehicle;
+        Section *forward;
+        Section *previous;
+        Section *right;
+
+        friend class Lane;
+        friend class Intersection;
 
         
     public:
-        Section *forward;
-        Section *right;
         Section();
         ~Section();
 
-        bool getSectionOccupied();
-        void setSectionOccupied(bool value);
-        bool getForwardSectionOccupied();
-        void setForward(Section &next);
-        void setRight(Section &next);
-
-        friend class Lane;
-
-
+        bool isSectionOccupied();
+        void changeSectionOccupied(Vehicle &vehicle);
 };
 
 #endif

@@ -17,10 +17,10 @@ Intersection::~Intersection() {}
 
 void Intersection::linkSections() {
 
-    one.setForward(two);
-    two.setForward(three);
-    three.setForward(four);
-    four.setForward(one);
+    one.forward= &two;
+    two.forward = &three;
+    three.forward = &four;
+    four.forward = &one;
 }
 
 #endif

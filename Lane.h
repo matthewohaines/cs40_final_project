@@ -3,7 +3,9 @@
 
 #include "Section.h"
 #include <string>
+#include <deque>
 #include "Intersection.h"
+#include "Vehicle.h"
 
 class Lane {
 
@@ -13,21 +15,34 @@ class Lane {
         int currentPosition;
 
     public:
+        Lane(std::string direction, int number_of_sections_before_intersection);
+        ~Lane();
+
         Section *firstSection;
         Section *lastSection;
         Section *currentSection;
+
         std::string getCurrentDirection();
         int getCurrentPosition();
         int getNumberOfSections();
-        
-        Lane(std::string direction, int number_of_sections_before_intersection);
-        ~Lane();
+        std::deque<Vehicle> laneQueue;
+
+        void placeVehicle(Vehicle& vehicle);
+        /*
+        bool getCurrent();
+        bool getFirst();
+        bool getNext();
+        bool getPrevious();
+        bool getLast();
+        */
+    
         void add();
         void createLane(int number_of_sections_before_intersection);
         void reset();
-        void moveCurrent(Intersection &inter, int number);
+        
         void linkFromIntersection(Intersection &inter, int number_of_sections_before_intersection);
         void linkToIntersection(Intersection &inter, int number_of_sections_before_intersection);
+        
 };
 
 #endif

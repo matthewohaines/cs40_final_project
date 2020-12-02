@@ -5,11 +5,15 @@
 
 class Intersection {
 
-    public:
+    private:
         Section one;
         Section two;
         Section three;
         Section four;
+
+        friend class Lane;
+
+    public:
         Intersection();
         ~Intersection();
         void linkSections();

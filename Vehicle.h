@@ -1,26 +1,30 @@
 #ifndef __VEHICLE_H__
 #define __VEHICLE_H__
 
-#include "Section.h"
-#include <string>
+enum class VehicleType {car, suv, truck};
+enum class Direction {north, south, east, west};
+enum class IntendedTurn {forward, right};
 
-class Vehicle
-{
-   private:
+class Vehicle {
 
-      int vehicleID;
-      std::string intendedTurn;
+    public:
+        static int vehicleCount;
+        Vehicle();
+        Vehicle(VehicleType type, Direction initialDirection, IntendedTurn intendedTurn);
+        Vehicle(const Vehicle& other);
+        ~Vehicle();
+        int getVehicleID();
+        VehicleType getVehicleType();
+        Direction getVehicleInitialDirection();
+        IntendedTurn getIntendedTurn();
 
-   public:
-      static int vehicleCount;
-      Vehicle(std::string turn);
-      Vehicle(const Vehicle& other);
-      ~Vehicle();
-      int getVehicleID();
-      int getVehicleCount();
-      std::string getTurn();
-
-
+    private:
+        int vehicleID;
+        VehicleType vehicleType;
+        Direction vehicleDirection;
+        IntendedTurn intendedTurn;
+        int position;
+        
 };
 
 #endif
