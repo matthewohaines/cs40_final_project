@@ -42,6 +42,8 @@ class Lane {
         
         void linkFromIntersection(Intersection &inter, int number_of_sections_before_intersection);
         void linkToIntersection(Intersection &inter, int number_of_sections_before_intersection);
+
+        void moveVehicle(Vehicle& vehicle);
         
 };
 

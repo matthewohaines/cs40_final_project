@@ -177,4 +177,10 @@ void Lane::linkToIntersection(Intersection &inter, int number_of_sections_before
     }
 }
 
+void Lane::moveVehicle(Vehicle& vehicle)
+{
+// check if forward section is occupied, if not, move it
+// if at intersection, check lights
+}
+
 #endif
