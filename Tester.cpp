@@ -13,8 +13,23 @@ int main() {
     northBound.linkToIntersection(intersection, 2);
 
     
-    Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      Vehicle otherVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      std::cout << newVehicle.getVehicleID() << std::endl;
+      std::cout << otherVehicle.getVehicleID() << std::endl;
+     
+      std::cout << northBound.getCurrentPosition() << std::endl;
+      std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+      std::cout << northBound.currentSection->isSectionOccupied() << std::endl;
+      std::cout << northBound.lastSection->isSectionOccupied() << std::endl;
+  
+     
+   // std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+//    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+  //  std::cout << northBound.firstSection->previous->isSectionOccupied() << std::endl;
+  //  std::cout << northBound.currentSection->isSectionOccupied() << std::endl;
 
+<<<<<<< HEAD
     std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
 
     northBound.firstSection->vehicle = &newVehicle;
@@ -32,6 +47,9 @@ int main() {
     std::cout << northBound.getCurrentPosition() << std::endl;
     northBound.reset();
     std::cout << northBound.getCurrentPosition() << std::endl;
+=======
+  //  std::cout << northBound.currentSection.vehicle->getVehicleID() << std::endl;
+>>>>>>> 1c3b77fc65895fe1d9d2162047cca63e3038a4b7
 
     //northBound.placeVehicle(newVehicle);
 

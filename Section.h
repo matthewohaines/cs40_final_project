@@ -21,6 +21,7 @@ class Section {
 
         bool isSectionOccupied();
         void changeSectionOccupied(Vehicle &vehicle);
+        Vehicle getVehicle();
 };
 
 #endif
