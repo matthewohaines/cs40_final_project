@@ -6,7 +6,6 @@
 class Section {
 
     private:
-        Vehicle *vehicle;
         Section *forward;
         Section *previous;
         Section *right;
@@ -18,6 +17,7 @@ class Section {
     public:
         Section();
         ~Section();
+        Vehicle *vehicle;
 
         bool isSectionOccupied();
         void changeSectionOccupied(Vehicle &vehicle);

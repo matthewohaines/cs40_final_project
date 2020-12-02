@@ -9,7 +9,6 @@ class Vehicle {
 
     public:
         static int vehicleCount;
-        Vehicle();
         Vehicle(VehicleType type, Direction initialDirection, IntendedTurn intendedTurn);
         Vehicle(const Vehicle& other);
         ~Vehicle();

@@ -121,10 +121,11 @@ void Lane::linkFromIntersection(Intersection &inter, int number_of_sections_befo
     reset();
     for(int i{}; i<number_of_sections_before_intersection; i++) {
         currentSection = currentSection->forward;
+        currentPosition++;
     }
     switch(this->direction[0]) {
         case 'n' :
-            inter.two.forward = currentSection;
+            inter.two.right = currentSection;
             currentSection->previous = &inter.two;
             break;
 
@@ -150,6 +151,7 @@ void Lane::linkToIntersection(Intersection &inter, int number_of_sections_before
     reset();
     for(int i{}; i<number_of_sections_before_intersection-1; i++) {
         currentSection = currentSection->forward;
+        currentPosition++;
     }
     switch(this->direction[0]) {
         case 'n' :

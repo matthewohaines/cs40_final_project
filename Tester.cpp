@@ -16,7 +16,22 @@ int main() {
     Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
 
     std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+
+    northBound.firstSection->vehicle = &newVehicle;
+
     std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+
+    northBound.firstSection->vehicle = nullptr;
+
+    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+    
+
+
+    std::cout << northBound.getNumberOfSections() << std::endl;
+    std::cout << northBound.getCurrentPosition() << std::endl;
+    northBound.reset();
+    std::cout << northBound.getCurrentPosition() << std::endl;
 
     //northBound.placeVehicle(newVehicle);
 
