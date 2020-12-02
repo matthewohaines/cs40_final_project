@@ -13,10 +13,23 @@ int main() {
     northBound.linkToIntersection(intersection, 2);
 
     
-    Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      Vehicle otherVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
+      std::cout << newVehicle.getVehicleID() << std::endl;
+      std::cout << otherVehicle.getVehicleID() << std::endl;
+     
+      std::cout << northBound.getCurrentPosition() << std::endl;
+      std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+      std::cout << northBound.currentSection->isSectionOccupied() << std::endl;
+      std::cout << northBound.lastSection->isSectionOccupied() << std::endl;
+  
+     
+   // std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+//    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+  //  std::cout << northBound.firstSection->previous->isSectionOccupied() << std::endl;
+  //  std::cout << northBound.currentSection->isSectionOccupied() << std::endl;
 
-    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
-    std::cout << northBound.firstSection->isSectionOccupied() << std::endl;
+  //  std::cout << northBound.currentSection.vehicle->getVehicleID() << std::endl;
 
     //northBound.placeVehicle(newVehicle);
 

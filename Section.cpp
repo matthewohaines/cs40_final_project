@@ -14,7 +14,7 @@ Section::Section() {
 Section::~Section() {}
 
 bool Section::isSectionOccupied() {
-
+ 
     return vehicle != nullptr;
 }
 
@@ -23,4 +23,7 @@ void Section::changeSectionOccupied(Vehicle &vehicle) {
     this->vehicle = &vehicle;
 }
 
+Vehicle Section::getVehicle(){
+   return *vehicle;
+}
 #endif

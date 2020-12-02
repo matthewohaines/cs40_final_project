@@ -93,6 +93,7 @@ bool Lane::getPrevious() {
 }
 */
 
+ 
 int Lane::getCurrentPosition() {
 
     return currentPosition;
