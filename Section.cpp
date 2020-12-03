@@ -4,6 +4,7 @@
 #include "Section.h"
 #include "Vehicle.h"
 
+Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
 Section::Section() {
     
     this->vehicle = nullptr;

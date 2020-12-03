@@ -9,7 +9,7 @@
 #include "Animator.h"
 #include <string>
 #include <vector>
-
+#include <list>
 int main(int argc, char* argv[])
 {
     //checks if there are 3 command line arguments
@@ -58,7 +58,6 @@ int main(int argc, char* argv[])
     std::string paramValue;
     std::vector <std::string> paramValues;
         
-        
     //Reads all of the strings and integers of each line
     while (infile >> paramName >> paramValue)
     {
@@ -93,7 +92,41 @@ int main(int argc, char* argv[])
     proportion_right_turn_trucks = stod(paramValues[16]);
     proportion_left_turn_trucks = stod(paramValues[17]);
 
-    //Sets the lanes and the number of sections belonging to each lane
+  
+    //Creates lists of vehicles and sections
+    std::vector<Section> northRoad;
+    for (int i=0; i < number_of_sections_before_intersection * 2 + 2; i++){
+       Section newSection;
+       northRoad[i] = newSection;
+    }
+    std::list<Section> southRoad;
+    for (int i=0; i < number_of_sections_before_intersection * 2 + 2; i++){
+       Section newSection;
+       northRoad.push_back(newSection);
+    }
+    std::list<Section> eastRoad;
+    for (int i=0; i < number_of_sections_before_intersection * 2 + 2; i++){
+       Section newSection;
+       northRoad.push_back(newSection);
+    }
+    std::list<Section> westRoad;
+    for (int i=0; i < number_of_sections_before_intersection * 2 + 2; i++){
+       Section newSection;
+       northRoad.push_back(newSection);
+    }
+   //Vehicle null(VehicleType::car, VehicleDirection::north, IntendedTurn::right)
+    std::vector<Vehicle*> vehiclesNorth(number_of_sections_before_intersection * 2 + 5);
+    std::vector<Vehicle*> vehiclesSouth(number_of_sections_before_intersection * 2 + 5);
+    std::vector<Vehicle*> vehiclesWest(number_of_sections_before_intersection * 2 + 5);
+    std::vector<Vehicle*> vehiclesEast(number_of_sections_before_intersection * 2 + 5);
+
+   // for (int i = 0; i < number_of_sections_before_intersection * 2 + 2; i++){
+
+     //       northRoad[i] = &vehiclesNorth[i+3];
+   // }
+    
+    
+//Sets the lanes and the number of sections belonging to each lane
     Lane north("northbound", number_of_sections_before_intersection); 
     Lane south("southbound", number_of_sections_before_intersection);
     Lane east("eastbound", number_of_sections_before_intersection);
