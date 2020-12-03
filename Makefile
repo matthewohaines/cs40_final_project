@@ -1,5 +1,5 @@
 EXECS = simulation
-OBJS = Section.o Lane.o Intersection.o TrafficLight.o Vehicle.o Truck.o Car.o Suv.o Animator.o simulation.o 
+OBJS = Section.o Lane.o Intersection.o TrafficLight.o Vehicle.o Animator.o simulation.o 
 
 #### use next two lines for Mac
 ##CC = clang++

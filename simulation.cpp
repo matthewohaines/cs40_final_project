@@ -6,9 +6,6 @@
 #include "Section.h"
 #include "Intersection.h"
 #include "Vehicle.h"
-#include "Car.h"
-#include "Truck.h"
-#include "Suv.h"
 #include "Animator.h"
 #include <string>
 #include <vector>
@@ -183,28 +180,28 @@ int main(int argc, char* argv[])
        if (random < prob_new_vehicle_northbound){
           if (random < proportion_of_cars) {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Car newCar("right");
+                Vehicle newCar(VehicleType::car, Direction::north, IntendedTurn::right);
              }
              else {
-                Car newCar("straight");
+                Vehicle newCar(VehicleType::car, Direction::north, IntendedTurn::forward);
              }
           }
           //Determines if an SUV will enter northbound lane
           else if (random < proportion_of_cars + proportion_of_SUVs){
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Suv newSUV("right");
+                Vehicle newSUV(VehicleType::suv, Direction::north, IntendedTurn::right);
              }
              else {
-                Suv newSUV("straight");
+                Vehicle newSUV(VehicleType::suv, Direction::north, IntendedTurn::forward);
              }
           }
           //Determines if a truck will enter northbound lane
           else {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Truck newTruck("right");
+                Vehicle newTruck(VehicleType::truck, Direction::north, IntendedTurn::right);
              }
              else {
-                Truck newTruck("straight");
+                Vehicle newTruck(VehicleType::truck, Direction::north, IntendedTurn::forward);
              }
           }
        }
@@ -212,28 +209,28 @@ int main(int argc, char* argv[])
        if (random < prob_new_vehicle_southbound){
           if (random < proportion_of_cars) {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Car newCar("right");
+                Vehicle newCar(VehicleType::car, Direction::south, IntendedTurn::right);
              }
              else {
-                Car newCar("straight");
+                Vehicle newCar(VehicleType::car, Direction::south, IntendedTurn::forward);
              }
           }
           //Determines if an SUV will enter southbound lane
           else if (random < proportion_of_cars + proportion_of_SUVs){
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Suv newSUV("right");
+                Vehicle newSUV(VehicleType::suv, Direction::south, IntendedTurn::right);
              }
              else {
-                Suv newSUV("straight");        
+                Vehicle newSUV(VehicleType::suv, Direction::south, IntendedTurn::forward);        
              }
           }
           //Determines if a truck will enter southbound lane
           else {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Truck newTruck("right");
+                Vehicle newTruck(VehicleType::truck, Direction::south, IntendedTurn::right);
              }
              else {
-                Truck newTruck("straight");
+                Vehicle newTruck(VehicleType::truck, Direction::south, IntendedTurn::forward);
              }
           }
        }
@@ -241,57 +238,57 @@ int main(int argc, char* argv[])
        if (random < prob_new_vehicle_eastbound){
           if (random < proportion_of_cars) {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Car newCar("right");
+                Vehicle newCar(VehicleType::car, Direction::east, IntendedTurn::right);
              }
              else {
-                Car newCar("straight");
+                Vehicle newCar(VehicleType::car, Direction::east, IntendedTurn::forward);
              }
           }
           //Determines if an SUV will enter eastbound lane
           else if (random < proportion_of_cars + proportion_of_SUVs){
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Suv newSUV("right");
+                Vehicle newSUV(VehicleType::suv, Direction::east, IntendedTurn::right);
              }
              else {
-                Suv newSUV("straight");
+                Vehicle newSUV(VehicleType::suv, Direction::east, IntendedTurn::forward);
              }
           }
           //Determines if a truck will enter eastbound lane
           else {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Truck newTruck("right");
+                Vehicle newTruck(VehicleType::truck, Direction::east, IntendedTurn::right);
              }
              else {
-                Truck newTruck("straight");
+                Vehicle newTruck(VehicleType::truck, Direction::east, IntendedTurn::forward);
              }
           }
        }
-       //Determines if a car will enter southbound lane
+       //Determines if a car will enter westbound lane
        if (random < prob_new_vehicle_westbound){
           if (random < proportion_of_cars) {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Car newCar("right");     
+                Vehicle newCar(VehicleType::car, Direction::west, IntendedTurn::right);     
              }
              else {
-                Car newCar("straight");
+                Vehicle newCar(VehicleType::car, Direction::west, IntendedTurn::forward);
              }
           }
-          //Determines if an SUV will enter southbound lane
+          //Determines if an SUV will enter westbound lane
           else if (random < proportion_of_cars + proportion_of_SUVs){
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Suv newSUV("right");
+                Vehicle newSUV(VehicleType::suv, Direction::west, IntendedTurn::right);
              }
              else {
-                Suv newSUV("straight");
+                Vehicle newSUV(VehicleType::suv, Direction::west, IntendedTurn::forward);
              }
           }
-          //Determines if a truck will enter southbound lane
+          //Determines if a truck will enter westbound lane
           else {
              if (random < proportion_right_turn_cars + proportion_left_turn_cars){
-                Truck newTruck("right");
+                Vehicle newTruck(VehicleType::truck, Direction::west, IntendedTurn::right);
              }
              else {
-                Truck newTruck("straight");
+                Vehicle newTruck(VehicleType::truck, Direction::west, IntendedTurn::forward);
              }
           }
        }
