@@ -1,26 +1,26 @@
 #ifndef __TRAFFICLIGHT_H__
 #define __TRAFFICLIGHT_H__
 
-#include "TrafficLight.h"
-#include <string>
+#include "VehicleBase.h"
 
 class TrafficLight {
-    
-private:
-    std::string color;
-    std::string direction;
 
-public:
-    TrafficLight();
-    TrafficLight(std::string directionBound, std::string lightColor);
-    ~TrafficLight();
-    void changeColor(std::string lightColor);
-    bool isRed();
-    bool isYellow();
-    bool isGreen();
-    std::string getColor();
-    std::string getDirection();
+    private:
+        int red;
+        int yellow;
+        int green;
+        int clock;
+        LightColor color;
+
+    public:
+        TrafficLight();
+        TrafficLight(int greenC, int yellowC, int redC, LightColor colorC);
+        ~TrafficLight();
+
+        inline LightColor getColor() { return this->color;}
+        inline int getClock() { return this->clock;}
+        void decrease();
+
 };
 
 #endif
-

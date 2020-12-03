@@ -4,49 +4,47 @@
 #include "TrafficLight.h"
 
 TrafficLight::TrafficLight() {
+    red = 0;
+    yellow = 0;
+    green = 0;
+    clock = 0;
+    color = LightColor::red;
 
-    this->color = "";
-    this->direction = "";
 }
-
-TrafficLight::TrafficLight(std::string directionBound, std::string lightColor){
-    this->direction = directionBound;
-    this->color = lightColor;
-}
-
 TrafficLight::~TrafficLight() {}
 
-void TrafficLight::changeColor(std::string lightColor) {
-    this->color = lightColor;
+TrafficLight::TrafficLight(int greenC, int yellowC, int redC, LightColor colorC) {
+        red = redC;
+        yellow = yellowC;
+        green = greenC;
+        color = colorC;
+        if(color == LightColor::red) {
+           clock = red;
+        } 
+        else if(color == LightColor::yellow) {
+           clock = yellow;
+        }
+        else {
+           clock = green;
+        }
 }
 
-bool TrafficLight::isRed(){
-    if (this->color == "red"){
-        return true;
+void TrafficLight::decrease() {
+    clock--;
+    if(clock == 0) {
+        if(color == LightColor::red) {
+            color = LightColor::green;
+            clock = green;
+        }
+        else if(color == LightColor::yellow) {
+            color = LightColor::red;
+            clock = red;       
+             }
+        else {
+            color = LightColor::yellow;
+            clock = yellow;
+        }
     }
-    return false;
 }
 
-bool TrafficLight::isYellow(){
-    if (this->color == "yellow"){
-        return true;
-    }
-    return false;
-}
-
-bool TrafficLight::isGreen(){
-    if (this->color == "green"){
-        return true;
-    }
-    return false;
-}
-
-std::string TrafficLight::getColor(){
-    return this->color;
-}
-
-std::string TrafficLight::getDirection(){
-    return this->direction;
-}
 #endif
-

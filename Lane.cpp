@@ -2,185 +2,111 @@
 #define __LANE_CPP__
 
 #include "Lane.h"
-#include "Section.h"
-#include "Intersection.h"
 
-Lane::Lane(std::string direction, int number_of_sections_before_intersection) {
+Lane::Lane() {}
 
-    this->firstSection = nullptr;
-    this->lastSection = nullptr;
-    this->currentSection = nullptr;
+Section *Lane::link(int num, Section *last) {
+    for(int i{}; i<num; i++) {
+        Section *newSection = new Section();
+        newSection->setPrevious(last);
+        last->setForward(newSection);
+        last = newSection;
+        road.push_back(newSection);
+    }
+    return last;
+
+}
+
+Lane::Lane(Direction direction, int number_of_sections_before_intersection, 
+    TrafficLight *trafficLight, Intersection *interOne, Intersection *interTwo) {
+
+    this->trafficLight = trafficLight;
+    this->length = number_of_sections_before_intersection*2 + 2;
     this->direction = direction;
-    this->numberOfSections = 0;
-    this->currentPosition = 0;
-    this->laneQueue = std::deque<Vehicle>();
-    createLane(number_of_sections_before_intersection);
-}
+    this->last = nullptr;
 
-Lane::~Lane() {}
+    for(int i=0; i<number_of_sections_before_intersection+4; i++) {
+        Section *newSection = new Section();
 
-void Lane::add() {
-
-    Section newSection;
-    currentSection = &newSection;
-    if(firstSection == nullptr) {
-        firstSection = &newSection;
+        if(i == 3) {
+            first = newSection;
+        }
+        if(last != nullptr) {
+            newSection->setPrevious(last);
+            last->setForward(newSection);
+        }
+        last = newSection;
+        road.push_back(newSection);
     }
-    newSection.previous = lastSection;
-    lastSection = &newSection;
 
-    if(newSection.previous != nullptr) {
-        lastSection->previous->forward = &newSection;
-    }
-    numberOfSections++;
-    currentPosition++;
-}
-
-void Lane::placeVehicle(Vehicle& vehicle) {
-
-    switch(vehicle.getVehicleType()) {
-
-        case VehicleType::car:
-            firstSection->vehicle = &vehicle;
-            if(!firstSection->forward->isSectionOccupied()) {
-                firstSection->forward->vehicle = &vehicle;
-            }
-            break;
-
-        case VehicleType::suv:
-            break;
-
-        case VehicleType::truck:
-            break;
-
-    }
-}
-
-/*
-bool Lane::getCurrent() {
-
-    return currentSection->getSectionOccupied();
-}
-
-bool Lane::getFirst() {
-
-    return firstSection->getSectionOccupied();
-}
-
-bool Lane::getLast() {
+    last = link(number_of_sections_before_intersection, last);
     
-    return lastSection->getSectionOccupied();
-}
+    road.push_back(interOne);
 
-bool Lane::getNext() {
+    last->setForward(interOne);
+    interOne->setPrevious(last);    
 
-    if(currentSection->forward != nullptr) {
-        currentSection = currentSection->forward;
-        currentPosition++;
-        return currentSection->getSectionOccupied();
+    Section *nextSection = new Section();
+
+    if(direction == Direction::north) {
+        interOne->setSouth(last);
+        interOne->setNorth(interTwo);
+        interTwo->setSouth(interOne);
+        interTwo->setNorth(nextSection);
     }
-    return currentSection->getSectionOccupied();
-}
+    else if(direction == Direction::south) {
 
-bool Lane::getPrevious() {
-
-    if(currentSection->previous != nullptr) {
-        currentSection = currentSection->previous;
-        currentPosition--;
-        return currentSection->getSectionOccupied();
+        interOne->setNorth(last);
+        interOne->setSouth(interTwo);
+        interTwo->setNorth(interOne);
+        interTwo->setSouth(nextSection);
     }
-    return currentSection->getSectionOccupied();
-}
-*/
-
- 
-int Lane::getCurrentPosition() {
-
-    return currentPosition;
-}
-
-int Lane::getNumberOfSections() {
-
-    return numberOfSections;
-}
-
-void Lane::createLane(int number_of_sections_before_intersection) {
-    for(int i{}; i<number_of_sections_before_intersection*2; i++) {
-
-        add();
+    else if(direction == Direction::east) {
+        interOne->setWest(last);
+        interOne->setEast(interTwo);
+        interTwo->setEast(nextSection);
+        interTwo->setWest(interOne);
     }
+    else if(direction == Direction::west) {
+        interOne->setEast(last);
+        interOne->setWest(interTwo);
+        interTwo->setEast(interOne);
+        interTwo->setWest(nextSection);
+    }
+    road.push_back(interTwo);
+    road.push_back(nextSection);
+    nextSection->setPrevious(interTwo);
+    last = nextSection;
+
+    link(number_of_sections_before_intersection+4, last);
 }
 
-void Lane::reset() {
-
-    this->currentSection = firstSection;
-    this->currentPosition = 1;
+Lane::~Lane() {
+    for (size_t i=0; i < road.size(); i++) {
+        if(!road[i]->getIsIntersection()) {
+            delete this->road[i];
+        }
+    }
+    road.clear();
 }
 
-void Lane::linkFromIntersection(Intersection &inter, int number_of_sections_before_intersection) {
-
-    reset();
-    for(int i{}; i<number_of_sections_before_intersection; i++) {
-        currentSection = currentSection->forward;
-        currentPosition++;
+std::vector<VehicleBase *> Lane::getVector() {
+    std::vector <VehicleBase *> roadVector(length, nullptr);
+    for(int i=0; i< length; i++) {
+        if(!road[i+4]->isEmpty()) {
+            roadVector[i] = road[i+4]->getVehicle();
+        }
     }
-    switch(this->direction[0]) {
-        case 'n' :
-            inter.two.right = currentSection;
-            currentSection->previous = &inter.two;
-            break;
-
-        case 's' :
-            inter.four.right = currentSection;
-            currentSection->previous = &inter.four;
-            break;
-
-         case 'e' :
-            inter.one.right = currentSection;
-            currentSection->previous = &inter.one;
-            break;
-
-         case 'w' :
-            inter.three.right = currentSection;
-            currentSection->previous = &inter.three;
-            break;
-    }
+    return roadVector;
 }
 
-void Lane::linkToIntersection(Intersection &inter, int number_of_sections_before_intersection) {
-
-    reset();
-    for(int i{}; i<number_of_sections_before_intersection-1; i++) {
-        currentSection = currentSection->forward;
-        currentPosition++;
-    }
-    switch(this->direction[0]) {
-        case 'n' :
-            currentSection->forward = &inter.one;
-            inter.one.previous = currentSection;
-            break;
-
-        case 's' :
-            currentSection->forward = &inter.three;
-            inter.three.previous = currentSection;
-            break;
-
-         case 'e' :
-            currentSection->forward = &inter.four;
-            inter.four.previous = currentSection;
-            break;
-
-         case 'w' :
-            currentSection->forward = &inter.two;
-            inter.two.previous = currentSection;
-            break;
-    }
-}
-
-void Lane::moveVehicle(Vehicle& vehicle)
-{
-// check if forward section is occupied, if not, move it
-// if at intersection, check lights
+bool Lane::canPlace() {
+    for(size_t i=0; i<4; i++) {
+        if(!road[i]->isEmpty()) {
+            return false;
+                }
+        }
+    return true;
 }
 
 #endif

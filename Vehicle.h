@@ -1,29 +1,30 @@
 #ifndef __VEHICLE_H__
 #define __VEHICLE_H__
 
-enum class VehicleType {car, suv, truck};
-enum class Direction {north, south, east, west};
+#include "VehicleBase.h"
+#include "Section.h"
+#include "Lane.h"
+
 enum class IntendedTurn {forward, right};
 
-class Vehicle {
-
-    public:
-        static int vehicleCount;
-        Vehicle(VehicleType type, Direction initialDirection, IntendedTurn intendedTurn);
-        Vehicle(const Vehicle& other);
-        ~Vehicle();
-        int getVehicleID();
-        VehicleType getVehicleType();
-        Direction getVehicleInitialDirection();
-        IntendedTurn getIntendedTurn();
+class Vehicle : public VehicleBase {
 
     private:
-        int vehicleID;
-        VehicleType vehicleType;
-        Direction vehicleDirection;
+        Section *first;
+        Section *last;
+        Lane *lane;
         IntendedTurn intendedTurn;
-        int position;
-        
+        bool atEnd;
+        int length;
+        void moveForward();
+        void moveRight();
+
+    public:
+        Vehicle(Lane *laneC, VehicleType type, IntendedTurn turn);
+        ~Vehicle(){}
+        void move();
+        inline bool isAtEnd() { return this->atEnd;}
+        inline IntendedTurn getIntendedTurn() { return this->intendedTurn; }
 };
 
 #endif

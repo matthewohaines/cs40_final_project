@@ -1,27 +1,33 @@
 #ifndef __SECTION_H__
 #define __SECTION_H__
 
-#include "Vehicle.h"
+#include "VehicleBase.h"
 
 class Section {
 
     private:
         Section *forward;
         Section *previous;
-        Section *right;
+        VehicleBase *vehicle;
+        bool empty;
 
-        friend class Lane;
-        friend class Intersection;
-
+    protected:
+        bool isIntersection;
         
     public:
         Section();
-        ~Section();
-        Vehicle *vehicle;
+        virtual ~Section();
 
-        bool isSectionOccupied();
-        void changeSectionOccupied(Vehicle &vehicle);
-        Vehicle getVehicle();
+        virtual inline Section *getForward() {return forward;}
+        virtual inline Section *getPrevious() {return previous;}
+        virtual inline bool isEmpty() {return empty;}
+        virtual inline VehicleBase *getVehicle() {return vehicle;}
+        virtual inline bool getIsIntersection() {return isIntersection;}
+
+        void setForward(Section *current);
+        void setPrevious(Section *current);
+        void clear();
+        void placeVehicle(VehicleBase *veh);
 };
 
 #endif

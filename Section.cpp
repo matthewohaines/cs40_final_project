@@ -2,29 +2,38 @@
 #define __SECTION_CPP__
 
 #include "Section.h"
-#include "Vehicle.h"
 
-Vehicle newVehicle(VehicleType::car, Direction::north, IntendedTurn::right);
 Section::Section() {
-    
-    this->vehicle = nullptr;
+
     this->forward = nullptr;
-    this->right = nullptr;
     this->previous = nullptr;
+    this->vehicle = nullptr;
+    this->empty = true;
+    this->isIntersection = false;
 }
+
 Section::~Section() {}
 
-bool Section::isSectionOccupied() {
- 
-    return vehicle != nullptr;
+void Section::setForward(Section *current) {
+
+    forward = current;
 }
 
-void Section::changeSectionOccupied(Vehicle &vehicle) {
+void Section::setPrevious(Section *current) {
 
-    this->vehicle = &vehicle;
+    previous = current;
 }
 
-Vehicle Section::getVehicle(){
-   return *vehicle;
+void Section::clear() {
+
+    empty = true;
+    vehicle = nullptr;
 }
+
+void Section::placeVehicle(VehicleBase *veh) {
+
+    vehicle = veh;
+    empty = false;
+}
+
 #endif
