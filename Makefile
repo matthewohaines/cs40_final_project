@@ -1,5 +1,6 @@
 EXECS = simulation
-OBJS = Simulation.o Section.o Intersection.o Lane.o TrafficLight.o Vehicle.o Sim.o. VehicleBase.o Animator.o 
+OBJS = Simulation.o Section.o Intersection.o Lane.o VehicleBase.o TrafficLight.o Vehicle.o Sim.o Animator.o
+
 
 CC = g++
 CCFLAGS = -std=c++17 -Wall -g
