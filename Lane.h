@@ -1,36 +1,31 @@
 #ifndef __LANE_H__
 #define __LANE_H__
 
-#include "Section.h"
 #include "Intersection.h"
+#include "Section.h"
+#include "TrafficLight.h"  
 #include "VehicleBase.h"
-#include "TrafficLight.h"
 #include <vector>
 
-class Lane {
-
+class Lane{
+    
     private:
+        std::vector<Section *> lane;
         Direction direction;
-        Section *first;
-        Section *last;
-        int length;
+        Section *priorSection;
         TrafficLight *trafficLight;
-        std::vector<Section*> road;
-        Section *link(int num, Section *last);
+        int totalLength;
 
     public:
-        Lane();
-        Lane(Direction direction, int number_of_sections_before_intersection, TrafficLight *trafficLight, Intersection *interOne, Intersection *interTwo);
+        Lane(){};
+        Lane(int numberOfSections, Direction direction, TrafficLight *trafficLight, Intersection *interOne, Intersection *interTwo);
         ~Lane();
 
         std::vector<VehicleBase*> getVector();
-        inline Direction getDirection() { return this->direction; }
-        inline TrafficLight *getTrafficLight() { return this->trafficLight; }
-        inline Section *getFirst() { return this->first;}
-
-        bool canPlace();
-        
+        Section *getPrior();
+        Direction getDirection();
+        TrafficLight *getTrafficLight();
+        bool canCreate();                                             
 };
 
 #endif
-

@@ -4,30 +4,29 @@
 #include "VehicleBase.h"
 
 class Section {
-
+    
     private:
         Section *forward;
         Section *previous;
-        VehicleBase *vehicle;
-        bool empty;
+        VehicleBase *vehicle = nullptr;
+        bool empty = true;
 
     protected:
-        bool isIntersection;
-        
+        bool isIntersection = false;
+
     public:
         Section();
-        virtual ~Section();
+        virtual ~Section(){}
 
-        virtual inline Section *getForward() {return forward;}
-        virtual inline Section *getPrevious() {return previous;}
-        virtual inline bool isEmpty() {return empty;}
-        virtual inline VehicleBase *getVehicle() {return vehicle;}
-        virtual inline bool getIsIntersection() {return isIntersection;}
-
-        void setForward(Section *current);
-        void setPrevious(Section *current);
-        void clear();
-        void placeVehicle(VehicleBase *veh);
+        virtual Section *getForward();
+        virtual Section *getPrevious();
+        virtual bool getIsIntersection();
+        bool isEmpty();
+        VehicleBase *getVehicle();
+        void setForward(Section *section);
+        void setPrevious(Section *section);
+        void setEmpty();
+        void setVehicle(VehicleBase *veh);
 };
 
 #endif

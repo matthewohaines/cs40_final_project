@@ -4,30 +4,28 @@
 #include "Section.h"
 
 class Intersection : public Section {
-
     private:
-        Section *north;
-        Section *south;
-        Section *west;
-        Section *east;
+        Section *intersectionOne;
+        Section *intersectionTwo;
+        Section *intersectionThree;
+        Section *intersectionFour;
 
     public:
         Intersection();
-        Intersection(const Intersection &other);
-        ~Intersection();
+        ~Intersection(){}
 
         Section *getForward() override;
         Section *getPrevious() override;
         Section *getRight();
+        Section *getIntersectionOne();
+        Section *getIntersectionTwo();
+        Section *getIntersectionThree();
+        Section *getIntersectionFour();
 
-        inline Section *getNorth() {return north;}
-        inline Section *getSouth() {return south;}
-        inline Section *getWest() {return west;}
-        inline Section *getEast() {return east;}
-        inline Section *setNorth(Section *north){return this->north = north;}
-        inline Section *setSouth(Section *south){return this->south = south;}
-        inline Section *setWest(Section *west){return this->west = west;}
-        inline Section *setEast(Section *east){return this->east = east;}
+        void setIntersectionOne(Section *one);
+        void setIntersectionTwo(Section *two);
+        void setIntersectionThree(Section *three);
+        void setIntersectionFour(Section *four);
 };
 
 #endif

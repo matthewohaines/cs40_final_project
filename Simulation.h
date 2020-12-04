@@ -7,16 +7,17 @@
 #include "Lane.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include <string>
 #include <vector>
 
-class Simulation {
+class Simulation{
+private:
+    std::vector<Vehicle *> vehicleVector;   // Vector of all vehicles in system
+    int seed;                          // Seed for rng
 
-    private:
-    std::vector<Vehicle *> vehVector;
-    int seed;
-    int time;
-    int sectionsBeforeIntersection;    
-    int greenNS;             
+    int simTime;                       // Maximum simulation time
+    int sectionsBeforeIntersection;    // Number of tiles before intersection for each road
+    int greenNS;                       // Time that the north-south light is green
     int yellowNS;                      // Time that the north-south light is yellow
     int greenEW;                       // Time that the east-west light is green
     int yellowEW;                      // Time that the east-west light is yellow
@@ -32,18 +33,22 @@ class Simulation {
     double probRightTrucks;            // Probability a truck turns right
     double probLeftCars;               // Probability a car turns left
     double probLeftSUVs;               // Probability a SUV turns left
-    double probLeftTrucks;   
+    double probLeftTrucks;             // Probability a truck turns left
 
-    void createVehicle(Lane *lane, double laneProb, double createProb, double vehicleProb, double turnProb);
-    void step();
+    // Helper methods
+    void createVehicle(Lane *lane, double laneProb, double createProb,
+        double vehicleProb, double turnProb);           // Create a vehicle on a particular lane
+    void step();                                        // Move traffic by one section
 
-    public:
-        Simulation();
-        Simulation(std::string inputFile, int seed);
-        ~Simulation();
+public:
+    // Default constructor
+    Simulation(){}
+    // Typical use constructor
+    Simulation(std::string file, int seed);
+    // Destructor
+    ~Simulation();
 
-        void simulate();
-        
+    void runSim();  // run simulation
 };
 
 #endif

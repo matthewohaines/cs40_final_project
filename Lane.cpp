@@ -3,109 +3,125 @@
 
 #include "Lane.h"
 
-Lane::Lane() {}
+Lane::Lane(int numberOfSections, Direction direction, TrafficLight *trafficLight, Intersection *interOne, Intersection *interTwo) {
+    
+    Section *last = nullptr;
+    this->totalLength = numberOfSections*2 + 2;
+    this->trafficLight = trafficLight;
+    this->direction = direction;
 
-Section *Lane::link(int num, Section *last) {
-    for(int i{}; i<num; i++) {
+    for (int i=0; i<4; i++) {
+        Section *newSection = new Section();
+        if (i == 3) {
+            this->priorSection = newSection;
+        }
+        if (last != nullptr){
+            newSection->setPrevious(last);
+            last->setForward(newSection);
+        }
+        last= newSection;
+        this->lane.push_back(newSection);
+    }
+    
+    for(int i=0; i<numberOfSections; i++) {
         Section *newSection = new Section();
         newSection->setPrevious(last);
         last->setForward(newSection);
         last = newSection;
-        road.push_back(newSection);
+        this->lane.push_back(newSection);
     }
-    return last;
-
-}
-
-Lane::Lane(Direction direction, int number_of_sections_before_intersection, 
-    TrafficLight *trafficLight, Intersection *interOne, Intersection *interTwo) {
-
-    this->trafficLight = trafficLight;
-    this->length = number_of_sections_before_intersection*2 + 2;
-    this->direction = direction;
-    this->last = nullptr;
-
-    for(int i=0; i<number_of_sections_before_intersection+4; i++) {
-        Section *newSection = new Section();
-
-        if(i == 3) {
-            first = newSection;
-        }
-        if(last != nullptr) {
-            newSection->setPrevious(last);
-            last->setForward(newSection);
-        }
-        last = newSection;
-        road.push_back(newSection);
-    }
-
-    last = link(number_of_sections_before_intersection, last);
     
-    road.push_back(interOne);
-
+    lane.push_back(interOne);
     last->setForward(interOne);
-    interOne->setPrevious(last);    
+    interOne->setPrevious(last);
 
-    Section *nextSection = new Section();
+    Section *afterIntersection = new Section();
 
-    if(direction == Direction::north) {
-        interOne->setSouth(last);
-        interOne->setNorth(interTwo);
-        interTwo->setSouth(interOne);
-        interTwo->setNorth(nextSection);
-    }
-    else if(direction == Direction::south) {
+    switch(direction) {
+        case Direction::north:
+            interOne->setIntersectionFour(last);
+            interOne->setIntersectionOne(interTwo);
+            interTwo->setIntersectionFour(interOne);
+            interTwo->setIntersectionOne(afterIntersection);
+            break;
 
-        interOne->setNorth(last);
-        interOne->setSouth(interTwo);
-        interTwo->setNorth(interOne);
-        interTwo->setSouth(nextSection);
-    }
-    else if(direction == Direction::east) {
-        interOne->setWest(last);
-        interOne->setEast(interTwo);
-        interTwo->setEast(nextSection);
-        interTwo->setWest(interOne);
-    }
-    else if(direction == Direction::west) {
-        interOne->setEast(last);
-        interOne->setWest(interTwo);
-        interTwo->setEast(interOne);
-        interTwo->setWest(nextSection);
-    }
-    road.push_back(interTwo);
-    road.push_back(nextSection);
-    nextSection->setPrevious(interTwo);
-    last = nextSection;
+        case Direction::south:
+            interOne->setIntersectionOne(last);
+            interOne->setIntersectionFour(interTwo);
+            interTwo->setIntersectionOne(interOne);
+            interTwo->setIntersectionFour(afterIntersection);   
+            break;
 
-    link(number_of_sections_before_intersection+4, last);
+        case Direction::east:
+            interOne->setIntersectionThree(last);
+            interOne->setIntersectionTwo(interTwo);
+            interTwo->setIntersectionThree(interOne);
+            interTwo->setIntersectionTwo(afterIntersection);
+            break;
+
+        case Direction::west:
+            interOne->setIntersectionTwo(last);
+            interOne->setIntersectionThree(interTwo);
+            interTwo->setIntersectionTwo(interOne);
+            interTwo->setIntersectionThree(afterIntersection);
+            break;
+    }
+
+    this->lane.push_back(interTwo);
+    this->lane.push_back(afterIntersection);
+    afterIntersection->setPrevious(interTwo);
+    last = afterIntersection;
+
+    for(int i=0; i<numberOfSections+4; i++) {
+        Section *otherSection = new Section();
+        otherSection->setPrevious(last);
+        last->setForward(otherSection);
+        last = otherSection;
+        this->lane.push_back(otherSection);
+    }
 }
 
 Lane::~Lane() {
-    for (size_t i=0; i < road.size(); i++) {
-        if(!road[i]->getIsIntersection()) {
-            delete this->road[i];
+    for (int i = 0; i < this->lane.size(); i++) {
+        if (!this->lane[i]->getIsIntersection()) {
+            delete this->lane[i];
         }
     }
-    road.clear();
+    this->lane.clear();
+}
+
+
+Section *Lane::getPrior() {
+
+    return this->priorSection;
+}
+
+Direction Lane::getDirection() {
+
+    return this->direction;
+}
+
+TrafficLight *Lane::getTrafficLight() {
+
+    return this->trafficLight;
 }
 
 std::vector<VehicleBase *> Lane::getVector() {
-    std::vector <VehicleBase *> roadVector(length, nullptr);
-    for(int i=0; i< length; i++) {
-        if(!road[i+4]->isEmpty()) {
-            roadVector[i] = road[i+4]->getVehicle();
+    std::vector<VehicleBase *> laneVector(totalLength, nullptr);
+    for (int i = 0; i < totalLength; i++) {
+        if (!this->lane[i + 4]->isEmpty()) {
+            laneVector[i] = lane[i + 4]->getVehicle();
         }
     }
-    return roadVector;
+    return laneVector;
 }
 
-bool Lane::canPlace() {
-    for(size_t i=0; i<4; i++) {
-        if(!road[i]->isEmpty()) {
+bool Lane::canCreate() {
+    for (int i = 0; i < 4; i++){
+        if (!this->lane[i]->isEmpty()) {
             return false;
-                }
         }
+    }
     return true;
 }
 

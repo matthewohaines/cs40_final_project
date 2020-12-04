@@ -2,29 +2,25 @@
 #define __VEHICLE_H__
 
 #include "VehicleBase.h"
-#include "Section.h"
 #include "Lane.h"
+#include "Section.h"
 
-enum class IntendedTurn {forward, right};
-
-class Vehicle : public VehicleBase {
-
+class Vehicle : public VehicleBase{
     private:
-        Section *first;
-        Section *last;
-        Lane *lane;
-        IntendedTurn intendedTurn;
-        bool atEnd;
-        int length;
-        void moveForward();
-        void moveRight();
+
+        Lane *lane;             
+        Section *first;        
+        Section *last;          
+        int length;            
+        bool atTheEnd = false;
+        bool willTurn;  
 
     public:
-        Vehicle(Lane *laneC, VehicleType type, IntendedTurn turn);
+        Vehicle(Lane *initialLane, VehicleType type, bool willTurn);
         ~Vehicle(){}
-        void move();
-        inline bool isAtEnd() { return this->atEnd;}
-        inline IntendedTurn getIntendedTurn() { return this->intendedTurn; }
-};
 
+        void move();                                   
+        bool reachedEnd();  
+        bool getWillTurn();
+};
 #endif

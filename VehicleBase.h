@@ -1,30 +1,31 @@
-#ifndef __VEHICLEBASE_H__
-#define __VEHICLEBASE_H__
+#ifndef __VEHICLE_BASE_H__
+#define __VEHICLE_BASE_H__
 
+enum class Direction   {north, south, east, west};
 enum class VehicleType {car, suv, truck};
-enum class Direction {north, south, east, west};
-enum class LightColor {red, yellow, green};
+enum class LightColor  {green, yellow, red};
 
-class VehicleBase {
+class VehicleBase
+{
+   public:
+      static int vehicleCount;
 
-    public:
-        VehicleBase(VehicleType type, Direction initialDirection);
-        VehicleBase(const VehicleBase& other);
-        virtual ~VehicleBase();
+   protected:
+      int         vehicleID;
+      VehicleType vehicleType;
+      Direction   vehicleDirection;
 
-        static int vehicleCount;
+   public:
+      VehicleBase(VehicleType type, Direction originalDirection);
+      VehicleBase(const VehicleBase& other);
+      virtual ~VehicleBase();
 
-        inline int getVehicleID() const { return this->vehicleID; }
-        inline VehicleType getVehicleType() const { return this->vehicleType; }
-        inline Direction getVehicleOriginalDirection() const { return this->vehicleDirection; }
-        inline void changeDirection(Direction direction) {vehicleDirection = direction;}
+      inline int getVehicleID() const { return this->vehicleID; }
 
-    protected:
-        int vehicleID;
-        VehicleType vehicleType;
-        Direction vehicleDirection;
-        
-        
+      inline VehicleType getVehicleType() const { return this->vehicleType; }
+      inline Direction   getVehicleOriginalDirection() const { return this->vehicleDirection; }
+
+      void changeDirection(Direction dir);
 };
 
 #endif

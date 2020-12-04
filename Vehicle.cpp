@@ -1,92 +1,118 @@
 #ifndef __VEHICLE_CPP__
 #define __VEHICLE_CPP__
 
-#include "Vehicle.h"
 #include "Intersection.h"
+#include "Vehicle.h"
+#include <iostream>
 
-Vehicle::Vehicle(Lane *laneC, VehicleType type, IntendedTurn turn) : VehicleBase(type, laneC->getDirection()) {
-    lane = laneC;
-    intendedTurn = turn;
-    if(type == VehicleType::car) {
-        length = 2;
+
+Vehicle::Vehicle(Lane *initialLane, VehicleType type, bool willTurn) : VehicleBase(type, initialLane->getDirection()) {
+    this->lane = initialLane;
+    this->willTurn = willTurn;
+    switch(type) {
+        case VehicleType::car:
+            this->length = 2;
+            break;
+        case VehicleType::suv:
+            this->length = 3;
+            break;
+        case VehicleType::truck:
+            this->length = 4;
+            break;
     }
-    else if(type == VehicleType::suv) {
-        length = 3;
-    }
-    else {
-        length = 4;
-    }
-    first = lane->getFirst();
-    first->placeVehicle(this);
+
+    first = lane->getPrior();
+    first->setVehicle(this);
     last = first;
 
-    for(int i=0; i<length-1; i++) {
+    for(int i = 0; i < length - 1; i++){
         last = last->getPrevious();
-        last->placeVehicle(this);
+        last->setVehicle(this);
     }
 }
 
-void Vehicle::move() {
-    if(!(first->getForward()->isEmpty()) || (first->getForward() == nullptr)) {
-        return;
+bool Vehicle::reachedEnd() { 
+
+    return this->atTheEnd;
+}
+
+bool Vehicle::getWillTurn() {
+
+    return this->willTurn;
+}
+
+void Vehicle::move(){
+
+    if(first->getForward()->isEmpty() && !first->getForward()->getIsIntersection()) {
+
+        first = first->getForward();
+        first->setVehicle(this);
+        last = last->getForward();
+        last->getPrevious()->setEmpty();
     }
-    else if(first->getForward()->getIsIntersection() && !(first->getIsIntersection())) {
-        if(lane->getTrafficLight()->getColor() == LightColor::red) {
-            return;
-        }
-        else if(lane->getTrafficLight()->getColor() == LightColor::yellow) {
-            int time = lane->getTrafficLight()->getClock();
-            if(intendedTurn == IntendedTurn::right && (time < length+1)){
+
+    else if(!first->getIsIntersection() && first->getForward()->getIsIntersection()) {
+
+        LightColor trafficLightColor = lane->getTrafficLight()->getColor();
+        int timeLeft = lane->getTrafficLight()->getTimeLeft();
+        switch(trafficLightColor) {
+            case LightColor::red :
                 return;
+            case LightColor::yellow :
+                if(willTurn && (timeLeft < length+1)) {
+                    return;
+                }
+                if(!willTurn && (timeLeft < length+2)) {
+                    return;
+                }
+            case LightColor::green:
+                first = first->getForward();
+                first->setVehicle(this);
+                last = last->getForward();
+                last->getPrevious()->setEmpty();
+                } 
             }
-            if(intendedTurn != IntendedTurn::right && (time < length+2)){
-                return;
-        }
-    }
-}
-    else if(first->getForward()->getIsIntersection() && first->getIsIntersection() 
-        &&  intendedTurn == IntendedTurn::right) {
-            moveRight();
-            return;
-        }
-    moveForward();
+        else if(first->getIsIntersection() && first->getForward()->getIsIntersection()) {
+                if(willTurn) {
+                    Intersection *inter = dynamic_cast<Intersection *>(first);
+                    first = inter->getRight();
+                    first->setVehicle(this);
+                    last->setEmpty();
+                    last = last->getForward();
+                    switch(getVehicleOriginalDirection()) {
 
-    if(first->getForward() == nullptr) {
-        atEnd = true;
-        Section *section = first;
-        while(section != last) {
-            section->clear();
-            section = section->getPrevious();
+                        case Direction::north :
+                            changeDirection(Direction::east);
+                            break;
+                        case Direction::south :
+                            changeDirection(Direction::west);
+                            break;
+                        case Direction::east :
+                            changeDirection(Direction::south);
+                            break;
+                        case Direction::west :
+                            changeDirection(Direction::north);
+                            break;
+                    }
+                }  
+                else {
+
+                    first = first->getForward();
+                    first->setVehicle(this);
+                    last = last->getForward();
+                    last->getPrevious()->setEmpty();
+                }      
+
         }
-        last->clear();
+        if(first->getForward() == nullptr){
+            atTheEnd = true;
+            Section *section = first;
+            while(section != last){
+                section->setEmpty();
+                section = section->getPrevious();
+        }
+            last->setEmpty();
     }
-}
-
-void Vehicle::moveForward() {
-    first = first->getForward();
-    first->placeVehicle(this);
-    last = last->getForward();
-    last->getPrevious()->clear();
-}
-
-void Vehicle::moveRight() {
-    Intersection *inter = dynamic_cast<Intersection* > (first);
-    first = inter->getRight();
-    first->placeVehicle(this);
-    last->clear();
-    last = last->getForward();
-    if(getVehicleOriginalDirection() == Direction::north) {
-        changeDirection(Direction::east);
-    }
-    else if(getVehicleOriginalDirection() == Direction::south) {
-        changeDirection(Direction::west);
-    }
-    else if(getVehicleOriginalDirection() == Direction::east) {
-        changeDirection(Direction::south);
-    }
-    else if(getVehicleOriginalDirection() == Direction::west) {
-        changeDirection(Direction::north);
-    }
-}
+ }
 
 #endif

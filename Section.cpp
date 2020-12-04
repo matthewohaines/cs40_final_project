@@ -3,37 +3,57 @@
 
 #include "Section.h"
 
-Section::Section() {
 
-    this->forward = nullptr;
-    this->previous = nullptr;
-    this->vehicle = nullptr;
+Section::Section()
+    : forward(nullptr),
+      previous(nullptr),
+      vehicle(nullptr)
+    {}
+
+Section *Section::getForward() {
+    
+    return this->forward;
+}
+
+Section *Section::getPrevious() {
+    
+    return this->previous;
+}
+
+bool Section::getIsIntersection() {
+    
+    return this->isIntersection;
+}
+
+bool Section::isEmpty() {  
+    
+    return this->empty;
+}
+
+VehicleBase *Section::getVehicle() {
+
+    return this->vehicle;
+}
+
+void Section::setForward(Section *section) {
+
+    this->forward = section;
+}
+
+void Section::setPrevious(Section *section) {
+    
+    this->previous = section;
+}
+
+void Section::setEmpty() {
+
     this->empty = true;
-    this->isIntersection = false;
+    this->vehicle = nullptr;
 }
 
-Section::~Section() {}
+void Section::setVehicle(VehicleBase *veh) {
 
-void Section::setForward(Section *current) {
-
-    forward = current;
+    this->empty = false;
+    this->vehicle = veh;
 }
-
-void Section::setPrevious(Section *current) {
-
-    previous = current;
-}
-
-void Section::clear() {
-
-    empty = true;
-    vehicle = nullptr;
-}
-
-void Section::placeVehicle(VehicleBase *veh) {
-
-    vehicle = veh;
-    empty = false;
-}
-
 #endif

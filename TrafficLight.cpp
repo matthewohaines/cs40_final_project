@@ -3,48 +3,59 @@
 
 #include "TrafficLight.h"
 
-TrafficLight::TrafficLight() {
-    red = 0;
-    yellow = 0;
-    green = 0;
-    clock = 0;
-    color = LightColor::red;
+TrafficLight::TrafficLight(LightColor currentColor, int greenTime, int yellowTime, int redTime) {
 
-}
-TrafficLight::~TrafficLight() {}
+    this->color = currentColor;
+    this->greenTime = greenTime;
+    this->yellowTime = yellowTime;
+    this->redTime = redTime;
+    switch(this->color) {
+        case LightColor::green :
+            this->timeLeft = this->greenTime;
+            break;
+        
+        case LightColor::yellow :
+            this->timeLeft = this->yellowTime;
+            break;
 
-TrafficLight::TrafficLight(int greenC, int yellowC, int redC, LightColor colorC) {
-        red = redC;
-        yellow = yellowC;
-        green = greenC;
-        color = colorC;
-        if(color == LightColor::red) {
-           clock = red;
-        } 
-        else if(color == LightColor::yellow) {
-           clock = yellow;
-        }
-        else {
-           clock = green;
-        }
+        case LightColor::red :
+            this->timeLeft = this->redTime;
+            break;
+    }
 }
 
-void TrafficLight::decrease() {
-    clock--;
-    if(clock == 0) {
-        if(color == LightColor::red) {
-            color = LightColor::green;
-            clock = green;
-        }
-        else if(color == LightColor::yellow) {
-            color = LightColor::red;
-            clock = red;       
-             }
-        else {
-            color = LightColor::yellow;
-            clock = yellow;
+LightColor TrafficLight::getColor() {
+
+    return this->color;
+}
+
+int TrafficLight::getTimeLeft() {
+
+    return this->timeLeft;
+}
+
+void TrafficLight::decrement() {
+    this->timeLeft--;
+    if(this->timeLeft == 0) {
+        switch(this->color) {
+            case LightColor::green:
+                this->color = LightColor::yellow;
+                this->timeLeft = yellowTime;
+                break;
+
+            case LightColor::yellow:
+                this->color = LightColor::red;
+                this->timeLeft = redTime;
+                break;
+
+            case LightColor::red:
+                this->color = LightColor::green;
+                this->timeLeft = greenTime;
+                break;
+            
         }
     }
 }
+
 
 #endif

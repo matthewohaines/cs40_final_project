@@ -6,21 +6,20 @@
 class TrafficLight {
 
     private:
-        int red;
-        int yellow;
-        int green;
-        int clock;
+        int greenTime;
+        int yellowTime;
+        int redTime;
         LightColor color;
+        int timeLeft;
 
     public:
-        TrafficLight();
-        TrafficLight(int greenC, int yellowC, int redC, LightColor colorC);
-        ~TrafficLight();
+        TrafficLight(LightColor currentColor, int greenTime, int yellowTime, int redTime);
+        ~TrafficLight(){}
 
-        inline LightColor getColor() { return this->color;}
-        inline int getClock() { return this->clock;}
-        void decrease();
 
+        LightColor getColor();
+        int getTimeLeft();
+        void decrement();  
 };
 
 #endif
